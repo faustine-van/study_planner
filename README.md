@@ -72,7 +72,7 @@ Implemented the initial user interface of My Study Planner using Flutter Materia
 
 ### Phase 1 Screenshot
 
-![My Study Planner - Phase 1](screenshots/phase-1/phase-1-static-screen.png)
+![My Study Planner - Phase 1](screenshotsPhase1.png)
 
 ## Project Structure
 
