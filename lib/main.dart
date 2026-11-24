@@ -13,9 +13,20 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  List<Map<String, dynamic>> goalsList = [
+    {"subject": "Math", "hours": "8 hours", "done": true},
+    {"subject": "Mobile application", "hours": "8 hours", "done": false},
+    {"subject": "DCF", "hours": "8 hours", "done": false},
+    {"subject": "Statistics", "hours": "8 hours", "done": false},
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +36,8 @@ class Home extends StatelessWidget {
         elevation: 8.0,
         shadowColor: Colors.black.withValues(alpha: 0.4),
         backgroundColor: Colors.blue, // Or Color(0xFF673AB7)
-      foregroundColor: Colors.white, 
-        ),
+        foregroundColor: Colors.white,
+      ),
       // STATIC: body with list of goals
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -44,82 +55,44 @@ class Home extends StatelessWidget {
             const SizedBox(height: 16),
             // STATIC: list of goals
             Expanded(
-              child: ListView(
-                children: [
-                  Card(
+              child: ListView.builder(
+                itemCount: goalsList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
                     child: ListTile(
-                      title: const Text('Math'),
-                      subtitle: const Text('8 hours'),
+                      title: Text(goalsList[index]["subject"]),
+                      subtitle: Text(goalsList[index]["hours"]),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Checkbox(value: false, onChanged: (bool? value) {}),
+                          if (goalsList[index]["done"] == true)
+                            const Badge(
+                              label: Text("Done"),
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                            ),
+                          const SizedBox(width: 4),
+                          Checkbox(
+                            value: goalsList[index]["done"] ?? false,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                goalsList[index]["done"] = value ?? false;
+                              });
+                            },
+                          ),
                           IconButton(
                             onPressed: () {
-                              debugPrint('Deleted');
+                              setState(() {
+                                goalsList.removeAt(index);
+                              });
                             },
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      title: const Text('Mobile application'),
-                      subtitle: const Text('8 hours'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(value: false, onChanged: (bool? value) {}),
-                          IconButton(
-                            onPressed: () {
-                              debugPrint('Deleted');
-                            },
-                            icon: Icon(Icons.delete),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Card(
-                    child: ListTile(
-                      title: const Text('DCF'),
-                      subtitle: const Text('8 hours'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(value: false, onChanged: (bool? value) {}),
-                          IconButton(
-                            onPressed: () {
-                              debugPrint('Deleted');
-                            },
-                            icon: Icon(Icons.delete),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      title: const Text('Statistics'),
-                      subtitle: const Text('8 hours'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(value: false, onChanged: (bool? value) {}),
-                          IconButton(
-                            onPressed: () {
-                              debugPrint('Deleted');
-                            },
-                            icon: Icon(Icons.delete),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ],
@@ -127,7 +100,15 @@ class Home extends StatelessWidget {
       ),
       // STATIC: floating action button to add goal
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            goalsList.add({
+              "subject": "New Subject",
+              "hours": "8 hours",
+              "done": false,
+            });
+          });
+        },
         child: const Icon(Icons.add),
       ),
     );
