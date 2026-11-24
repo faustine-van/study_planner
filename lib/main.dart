@@ -24,6 +24,8 @@ class Home extends StatelessWidget {
         title: const Text('My Study Planner'),
         elevation: 8.0,
         shadowColor: Colors.black.withValues(alpha: 0.4),
+        backgroundColor: Colors.blue, // Or Color(0xFF673AB7)
+      foregroundColor: Colors.white, 
         ),
       // STATIC: body with list of goals
       body: Padding(
