@@ -41,9 +41,19 @@ flutter pub get
 
 **4. Run the application**
 
+Run on the default available device (for example, an Android emulator):
+
 ```bash
 flutter run
 ```
+
+Or, run in Google Chrome:
+
+```bash
+flutter run -d chrome
+```
+
+**Note:** Make sure your emulator or physical device is connected and available before running the default command.
 
 ## Project Progress
 
