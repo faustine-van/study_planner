@@ -1,3 +1,4 @@
+
 import 'package:material_ui/material_ui.dart';
 
 void main() {
@@ -21,12 +22,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  // LOGIC: store study goals
   List<Map<String, dynamic>> goalsList = [
-    {"subject": "Math", "hours": "8 hours", "done": true},
-    {"subject": "Mobile application", "hours": "8 hours", "done": false},
-    {"subject": "DCF", "hours": "8 hours", "done": false},
-    {"subject": "Statistics", "hours": "8 hours", "done": false},
+    {"subject": "Math", "hours": 8, "done": true},
+    {"subject": "Mobile application","hours": 8, "done": false},
+    {"subject": "DCF", "hours": 8, "done": false},
+    {"subject": "Statistics", "hours": 8, "done": false},
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +49,7 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             // STATIC: title
             const Text(
               'My Goals',
@@ -61,7 +67,7 @@ class _HomeState extends State<Home> {
                   return Card(
                     child: ListTile(
                       title: Text(goalsList[index]["subject"]),
-                      subtitle: Text(goalsList[index]["hours"]),
+                      subtitle: Text(goalsList[index]["hours"].toString()),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -72,10 +78,12 @@ class _HomeState extends State<Home> {
                               textColor: Colors.white,
                             ),
                           const SizedBox(width: 4),
+                          // CONNECTION: checkbox triggers the toggle function
                           Checkbox(
                             value: goalsList[index]["done"] ?? false,
                             onChanged: (bool? value) {
                               setState(() {
+                                // LOGIC: toggle goal as done
                                 goalsList[index]["done"] = value ?? false;
                               });
                             },
@@ -83,6 +91,7 @@ class _HomeState extends State<Home> {
                           IconButton(
                             onPressed: () {
                               setState(() {
+                                // LOGIC: delete a study goal
                                 goalsList.removeAt(index);
                               });
                             },
@@ -98,10 +107,12 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      // STATIC: floating action button to add goal
+
+      // CONNECTION: button triggers the add function
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
+            // LOGIC: add a new samples study goal
             goalsList.add({
               "subject": "New Subject",
               "hours": "8 hours",

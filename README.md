@@ -41,13 +41,13 @@ flutter pub get
 
 **4. Run the application**
 
-Run on the default available device (for example, an Android emulator):
+Run on the default available device:
 
 ```bash
 flutter run
 ```
 
-Or, run in Google Chrome:
+Or run in Google Chrome:
 
 ```bash
 flutter run -d chrome
@@ -61,7 +61,7 @@ flutter run -d chrome
 
 **Status: Completed**
 
-Implemented the initial user interface of My Study Planner using Flutter Material widgets.
+Implemented the initial user interface using Flutter Material widgets.
 
 **Features implemented:**
 
@@ -70,8 +70,8 @@ Implemented the initial user interface of My Study Planner using Flutter Materia
 - Three or more static study goal cards.
 - Subject names and planned study hours.
 - Card and ListTile widgets.
-- FloatingActionButton (functionality will be added in a later phase).
-- StatelessWidget for the home screen.
+- FloatingActionButton (functionality added in Phase 2).
+- StatelessWidget for the initial home screen.
 
 **Deliverables:**
 
@@ -80,9 +80,39 @@ Implemented the initial user interface of My Study Planner using Flutter Materia
 - [x] Screenshot of the running application.
 - [x] `lib/main.dart`
 
-### Phase 1 Screenshot
+**Phase 1 Screenshot**
 
 ![My Study Planner - Phase 1](screenshots/Phase1.PNG)
+
+---
+
+### Phase 2: Working List
+
+**Status: Completed**
+
+Converted the static screen into a functional study planner using StatefulWidget and setState().
+
+**Features implemented:**
+
+- Study goals stored in a List of Maps.
+- Dynamic display of goals using ListView.builder.
+- Add a sample study goal using the FloatingActionButton.
+- Mark goals as completed or incomplete using a Checkbox.
+- Visual distinction between completed and incomplete goals.
+- Delete study goals using the delete icon.
+- Update the interface dynamically using setState().
+
+**Deliverables:**
+
+- [x] Add new samples study goals.
+- [x] Mark goals as completed or incomplete.
+- [x] Delete study goals.
+- [x] Display goals dynamically from a list.
+- [x] `lib/main.dart`
+
+**Phase 1 Screenshot**
+
+![My Study Planner - Phase 2](screenshots/Phase2.PNG)
 
 ## Project Structure
 
@@ -91,7 +121,8 @@ study_planner/
 ├── lib/
 │   └── main.dart
 ├── screenshots/
-│   └── phase-1/
+│   ├── Phase1.PNG
+│   └── phase-2/
 ├── docs/
 │   └── PHASE_CHECKLIST.md
 ├── android/
@@ -104,4 +135,12 @@ study_planner/
 
 ## Project Status
 
-Phase 1 completed. Development will continue with the next project phases.
+| Phase | Description | Status |
+|---|---|---|
+| 1 | Static Screen | Completed |
+| 2 | Working List | Completed |
+| 3 | Statistics & Cards | Not Started |
+| 4 | Second Screen | Not Started |
+| 5 | Database Persistence | Not Started |
+
+Development is progressing phase by phase.
