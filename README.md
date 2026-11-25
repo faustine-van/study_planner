@@ -9,6 +9,13 @@ Developed as part of the **Mobile App Development (Dart & Flutter)** course at U
 - Flutter
 - Dart
 
+## Application Flow
+
+The diagram below shows the basic workflow of the Study Planner.
+
+![Study Planner Workflow](workflow.PNG)
+
+
 ## Getting Started
 
 ### Prerequisites
