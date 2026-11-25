@@ -31,6 +31,12 @@ class _HomeState extends State<Home> {
     {"subject": "Statistics", "hours": 8, "done": false},
   ];
 
+  int sum(){
+    return goalsList.fold(0, (sum, goal) => sum + (goal['hours'] as int));
+  }
+  int count(bool value){
+    return goalsList.where((goal) => goal['done'] == value).length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,7 @@ class _HomeState extends State<Home> {
         title: const Text('My Study Planner'),
         elevation: 8.0,
         shadowColor: Colors.black.withValues(alpha: 0.4),
-        backgroundColor: Colors.blue, // Or Color(0xFF673AB7)
+        backgroundColor: Colors.purple,
         foregroundColor: Colors.white,
       ),
       // STATIC: body with list of goals
@@ -49,6 +55,57 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            // Add summary rows
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                      
+                        children: [
+                          Text('Total hours'),
+                          Text(sum().toString()),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Completed goals"),
+                          Text(count(true).toString()),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Remaining goals"),
+                          Text(count(false).toString()),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+            
+              ],
+            ),
 
             // STATIC: title
             const Text(

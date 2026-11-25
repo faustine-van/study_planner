@@ -114,6 +114,36 @@ Converted the static screen into a functional study planner using StatefulWidget
 
 ![My Study Planner - Phase 2](screenshots/Phase2.PNG)
 
+
+---
+
+### Phase 3: Statistics & Cards
+
+**Status: Completed**
+
+Added a summary section to the top of the Study Planner to give students an overview of their study progress.
+
+**Features implemented:**
+
+- Three summary cards: Total hours, Completed goals, and Remaining goals.
+- Calculate total study hours using `fold()`.
+- Count completed and remaining goals using `where()`.
+- Use getters to calculate statistics in the logic section.
+- Create a reusable `StatelessWidget` for the summary cards.
+- Display the three cards in a Row using Expanded.
+- Update statistics automatically when study goals change.
+- Display a friendly message when there are no study goals.
+
+**Deliverables:**
+
+- [x] Total study hours calculated correctly.
+- [x] Completed goals counted correctly.
+- [x] Remaining goals counted correctly.
+- [x] Statistics update when goals change.
+- [x] Reusable summary card widget implemented.
+- [x] `lib/main.dart`
+
+
 ## Project Structure
 
 ```text
