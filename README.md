@@ -31,7 +31,7 @@ The diagram below shows the basic workflow of the Study Planner.
 ### Prerequisites
 
 - Flutter SDK
-- Dart SDK
+- Dart
 - Android Studio or VS Code
 - Android emulator or physical device
 - Git
