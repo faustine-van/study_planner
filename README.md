@@ -23,7 +23,7 @@ RegNo:
 
 The diagram below shows the basic workflow of the Study Planner.
 
-![Study Planner Workflow](workflow.png)
+![Study Planner Workflow](screenshots/workflow.png)
 
 
 ## Getting Started
