@@ -4,6 +4,16 @@ A Flutter mobile application designed to help students organize their study goal
 
 Developed as part of the **Mobile App Development (Dart & Flutter)** course at UNILAK.
 
+**Group 2**
+
+RegNo:
+ - 26919/2024
+ - 26288/2024
+ - 25967/2024
+ - 270588/2024
+ - 26626/2024
+
+
 ## Technologies Used
 
 - Flutter
@@ -13,7 +23,7 @@ Developed as part of the **Mobile App Development (Dart & Flutter)** course at U
 
 The diagram below shows the basic workflow of the Study Planner.
 
-![Study Planner Workflow](workflow.PNG)
+![Study Planner Workflow](workflow.png)
 
 
 ## Getting Started
