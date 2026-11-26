@@ -187,11 +187,11 @@ This phase introduces a separate screen for adding study goals.
 
 | Add Goal Screen | Form Validation |
 |---|---|
-| `screenshots/phase-4/add-goal-screen.png` | `screenshots/phase-4/add-goal-validation.png` |
+| `screenshots/add-goal-screen.png` | `screenshots/add-goal-validation.png` |
 
 | Updated Goals List |
 |---|
-| `screenshots/phase-4/updated-goals-list.png` |
+| `screenshots/updated-goals-list.png` |
 
 
 
