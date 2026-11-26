@@ -167,6 +167,33 @@ Added summary statistics to help users monitor their study progress.
 - Updated `main.dart`.
 
 
+### Phase 4: Add Goal Screen
+
+**Status:** Completed
+
+This phase introduces a separate screen for adding study goals.
+
+**Features implemented:**
+- Added a dedicated `AddGoalScreen`.
+- Added input fields for the subject and study hours.
+- Implemented form validation to ensure the subject is not empty and the hours are a valid number greater than zero.
+- Used `TextEditingController` to manage form input.
+- Used `Navigator.push()` to open the Add Goal screen.
+- Used `Navigator.pop()` to return the new goal to the home screen.
+- Updated the goals list and statistics after a goal is added.
+- Disposed of the text controllers and focus nodes.
+
+**Screenshots:**
+
+| Add Goal Screen | Form Validation |
+|---|---|
+| `screenshots/phase-4/add-goal-screen.png` | `screenshots/phase-4/add-goal-validation.png` |
+
+| Updated Goals List |
+|---|
+| `screenshots/phase-4/updated-goals-list.png` |
+
+
 
 ## Project Structure
 
