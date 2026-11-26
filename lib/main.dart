@@ -1,5 +1,5 @@
-
 import 'package:material_ui/material_ui.dart';
+import 'package:study_planner/add_goal_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,7 +10,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Home());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: const Home());
   }
 }
 
@@ -22,19 +22,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   // LOGIC: store study goals
   List<Map<String, dynamic>> goalsList = [
     {"subject": "Math", "hours": 8, "done": true},
-    {"subject": "Mobile application","hours": 8, "done": false},
+    {"subject": "Mobile application", "hours": 8, "done": false},
     {"subject": "DCF", "hours": 8, "done": false},
     {"subject": "Statistics", "hours": 8, "done": false},
   ];
 
-  int sum(){
+  int sum() {
     return goalsList.fold(0, (sum, goal) => sum + (goal['hours'] as int));
   }
-  int count(bool value){
+
+  int count(bool value) {
     return goalsList.where((goal) => goal['done'] == value).length;
   }
 
@@ -55,55 +55,12 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // Add summary rows
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                      
-                        children: [
-                          Text('Total hours'),
-                          Text(sum().toString()),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("Completed goals"),
-                          Text(count(true).toString()),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("Remaining goals"),
-                          Text(count(false).toString()),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            
+                CardStatistics(title: "Total hours", data: sum()),
+                CardStatistics(title: "Completed goals", data: count(true)),
+                CardStatistics(title: "Remaining goals", data: count(false)),
               ],
             ),
 
@@ -117,65 +74,73 @@ class _HomeState extends State<Home> {
 
             const SizedBox(height: 16),
             // STATIC: list of goals
-            Expanded(
-              child: ListView.builder(
-                itemCount: goalsList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(goalsList[index]["subject"]),
-                      subtitle: Text(goalsList[index]["hours"].toString()),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (goalsList[index]["done"] == true)
-                            const Badge(
-                              label: Text("Done"),
-                              backgroundColor: Colors.green,
-                              textColor: Colors.white,
+            if (goalsList.isEmpty)
+              const Expanded(
+                child: Center(
+                  child: Text("List is empty. Add your first goal"),
+                ),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: goalsList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(goalsList[index]["subject"]),
+                        subtitle: Text(goalsList[index]["hours"].toString()),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (goalsList[index]["done"] == true)
+                              const Badge(
+                                label: Text("Done"),
+                                backgroundColor: Colors.green,
+                                textColor: Colors.white,
+                              ),
+                            const SizedBox(width: 4),
+                            Checkbox(
+                              value: goalsList[index]["done"] ?? false,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  goalsList[index]["done"] = value ?? false;
+                                });
+                              },
                             ),
-                          const SizedBox(width: 4),
-                          // CONNECTION: checkbox triggers the toggle function
-                          Checkbox(
-                            value: goalsList[index]["done"] ?? false,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                // LOGIC: toggle goal as done
-                                goalsList[index]["done"] = value ?? false;
-                              });
-                            },
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                // LOGIC: delete a study goal
-                                goalsList.removeAt(index);
-                              });
-                            },
-                            icon: const Icon(Icons.delete),
-                          ),
-                        ],
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  goalsList.removeAt(index);
+                                });
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),
 
       // CONNECTION: button triggers the add function
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            // LOGIC: add a new samples study goal
-            goalsList.add({
-              "subject": "New Subject",
-              "hours": "8 hours",
-              "done": false,
+        onPressed: () async {
+          final result = await Navigator.push<Map<String, dynamic>>(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddGoalScreen(),
+            ),
+          );
+           if (result != null){
+            setState(() {
+                goalsList.add(result);
             });
-          });
+           }
+          
         },
         child: const Icon(Icons.add),
       ),
@@ -183,3 +148,23 @@ class _HomeState extends State<Home> {
   }
 }
 
+class CardStatistics extends StatelessWidget {
+  final String title;
+  final int data;
+  const CardStatistics({super.key, required this.title, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [Text(title), Divider(height: 2), Text(data.toString())],
+          ),
+        ),
+      ),
+    );
+  }
+}

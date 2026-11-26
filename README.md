@@ -134,51 +134,61 @@ Converted the static screen into a functional study planner using StatefulWidget
 
 ---
 
-### Phase 3: Statistics & Cards
+### Phase 3: Statistics & Summary Cards
 
 **Status: Completed**
 
-Added a summary section to the top of the Study Planner to give students an overview of their study progress.
+Added summary statistics to help users monitor their study progress.
 
 **Features implemented:**
+- Total study hours calculated using `fold()`.
+- Completed and remaining goals counted using `where()`.
+- Reusable `CardStatistics` StatelessWidget.
+- Three equally sized summary cards using `Row` and `Expanded`.
+- Empty-state message when there are no study goals.
+- Statistics update automatically when goals are added, completed, or deleted.
 
-- Three summary cards: Total hours, Completed goals, and Remaining goals.
-- Calculate total study hours using `fold()`.
-- Count completed and remaining goals using `where()`.
-- Use getters to calculate statistics in the logic section.
-- Create a reusable `StatelessWidget` for the summary cards.
-- Display the three cards in a Row using Expanded.
-- Update statistics automatically when study goals change.
-- Display a friendly message when there are no study goals.
+**Screenshots**
+
+**Statistics and Study Goals**
+
+![Phase 3 Statistics](screenshots/Phase3.png)
+
+**Empty State**
+
+![Phase 3 Empty State](screenshots/Phase3 - empty list.png)
 
 **Deliverables:**
+- Working summary cards.
+- Correct statistics calculations.
+- Reusable statistics widget.
+- Dynamic statistics updates.
+- Empty-state display.
+- Updated `main.dart`.
 
-- [x] Total study hours calculated correctly.
-- [x] Completed goals counted correctly.
-- [x] Remaining goals counted correctly.
-- [x] Statistics update when goals change.
-- [x] Reusable summary card widget implemented.
-- [x] `lib/main.dart`
 
 
 ## Project Structure
 
 ```text
 study_planner/
-├── lib/
-│   └── main.dart
-├── screenshots/
-│   ├── Phase1.PNG
-│   └── phase-2/
-├── docs/
-│   └── PHASE_CHECKLIST.md
 ├── android/
 ├── ios/
+├── lib/
+│   └── main.dart
 ├── test/
+├── screenshots/
+│   ├── Phase1.PNG
+│   ├── Phase2.PNG
+│   ├── Phase3.png
+│   ├── Phase3 - empty list.png
+│   └── workflow.png
+├── .gitignore
 ├── README.md
 ├── pubspec.yaml
-└── .gitignore
+└── pubspec.lock
 ```
+
 
 ## Project Status
 
