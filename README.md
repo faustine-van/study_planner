@@ -156,7 +156,7 @@ Added summary statistics to help users monitor their study progress.
 
 **Empty State**
 
-![Phase 3 Empty State](screenshots/Phase3 - empty list.png)
+![Phase 3 Empty State](screenshots/Phase3_empty_list.png)
 
 **Deliverables:**
 - Working summary cards.
