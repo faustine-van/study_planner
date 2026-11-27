@@ -1,7 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:study_planner/add_goal_screen.dart';
+import 'package:study_planner/firebase_options.dart';
+import 'database_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MainApp());
 }
 
@@ -22,13 +27,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // LOGIC: store study goals
-  List<Map<String, dynamic>> goalsList = [
-    {"subject": "Math", "hours": 8, "done": true},
-    {"subject": "Mobile application", "hours": 8, "done": false},
-    {"subject": "DCF", "hours": 8, "done": false},
-    {"subject": "Statistics", "hours": 8, "done": false},
-  ];
+  List<Map<String, dynamic>> goalsList = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadGoals();
+  }
+
+  Future<void> loadGoals() async {
+    final goals = await getGoals();
+
+    if (!mounted) return;
+
+    setState(() {
+      goalsList = goals;
+      isLoading = false;
+    });
+  }
 
   int sum() {
     return goalsList.fold(0, (sum, goal) => sum + (goal['hours'] as int));
@@ -41,7 +58,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // STATIC: appbar with title heading
       appBar: AppBar(
         title: const Text('My Study Planner'),
         elevation: 8.0,
@@ -49,7 +65,6 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.purple,
         foregroundColor: Colors.white,
       ),
-      // STATIC: body with list of goals
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -64,7 +79,6 @@ class _HomeState extends State<Home> {
               ],
             ),
 
-            // STATIC: title
             const Text(
               'My Goals',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -73,8 +87,9 @@ class _HomeState extends State<Home> {
             Divider(height: 0),
 
             const SizedBox(height: 16),
-            // STATIC: list of goals
-            if (goalsList.isEmpty)
+            if (isLoading)
+              const Expanded(child: Center(child: CircularProgressIndicator()))
+            else if (goalsList.isEmpty)
               const Expanded(
                 child: Center(
                   child: Text("List is empty. Add your first goal"),
@@ -101,17 +116,18 @@ class _HomeState extends State<Home> {
                             const SizedBox(width: 4),
                             Checkbox(
                               value: goalsList[index]["done"] ?? false,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  goalsList[index]["done"] = value ?? false;
-                                });
+                              onChanged: (bool? value) async {
+                                await updateGoal(
+                                  goalsList[index]['id'],
+                                  value ?? false,
+                                );
+                                await loadGoals();
                               },
                             ),
                             IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  goalsList.removeAt(index);
-                                });
+                              onPressed: () async {
+                                await deleteGoal(goalsList[index]['id']);
+                                await loadGoals();
                               },
                               icon: const Icon(Icons.delete),
                             ),
@@ -126,21 +142,16 @@ class _HomeState extends State<Home> {
         ),
       ),
 
-      // CONNECTION: button triggers the add function
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final result = await Navigator.push<Map<String, dynamic>>(
             context,
-            MaterialPageRoute(
-              builder: (context) => const AddGoalScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const AddGoalScreen()),
           );
-           if (result != null){
-            setState(() {
-                goalsList.add(result);
-            });
-           }
-          
+          if (result != null) {
+            await insertGoal(result);
+            await loadGoals();
+          }
         },
         child: const Icon(Icons.add),
       ),

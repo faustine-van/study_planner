@@ -71,7 +71,6 @@ void _saveGoal() {
     Navigator.pop(context, {
       "subject": _subjectController.text.trim(),
       "hours": int.parse(_hoursController.text),
-      "done": false,
     });
   }
 }
